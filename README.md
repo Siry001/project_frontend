@@ -1,3 +1,48 @@
 # Gym Frontend (React)
 
 - This project was developed as part of a System Design and Analysis course.
+
+## Instructions
+
+### Prerequisites
+- Node.js (version 18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/Siry001/project_frontend.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd project_frontend
+   ```
+
+3. Install dependencies:
+   ```
+   npm install
+   ```
+
+### Running the Application
+
+To start the development server:
+```
+npm run dev
+```
+
+The application will be available at `http://localhost:5173` (default Vite port).
+
+### Building for Production
+
+To build the application:
+```
+npm run build
+```
+
+To preview the production build:
+```
+npm run preview
+```
+
