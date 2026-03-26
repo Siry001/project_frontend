@@ -16,12 +16,17 @@ import Logo from '../assets/extension_icon.svg';
 
 // Removed custom Card and SignInContainer, using AuthLayout instead.
 
+// Custom Hooks
+import { useAuth } from '../Contexts/customHooks';
+
 export default function SignIn(props) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+
+  const { login } = useAuth()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,16 +36,25 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (emailError || passwordError) {
-      event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userData = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }
+    try {
+      await login(userData)
+    } catch (error) {
+      if (error.message === "Invalid Credentials") {
+        alert("Email or Password incorrect")
+      } else {
+        alert("try again later")
+      }
+    }
   };
 
   const validateInputs = () => {
