@@ -2,6 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import MarketingPage from './pages/MarketingPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Dashboard from './pages/Dashboard';
+
 import ProtectedRoutes from './components/ProtectedRoutes';
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
         <Route path='/sign-up' element={<SignUp />} />
 
         <Route element={<ProtectedRoutes />} >
-          
+          <Route path='/dashboard' element={<Dashboard />} />
         </Route>
       </Routes>
     </div>

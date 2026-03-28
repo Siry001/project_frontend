@@ -1,6 +1,7 @@
 # Gym Frontend (React)
 
 - This project was developed as part of a System Design and Analysis course.
+- Read API Documentation: [API Documentation](./API_Documentation.md)
 
 ## Instructions
 
