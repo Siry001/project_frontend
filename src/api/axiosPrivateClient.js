@@ -3,7 +3,7 @@ import { getToken } from "./services/tokenServices";
 
 // Init User who has signed in successfully
 export const axiosClient = axios.create({
-    baseURL: "https://gym_project.test/api",
+    baseURL: "https://projectbackend-production-87ea.up.railway.app/api",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
