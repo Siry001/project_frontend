@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
+import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Logo from '../assets/extension_icon.svg';
@@ -51,9 +52,9 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
-            <div>
-              <img src={Logo} alt="logo" width={30} height={30} />
-            </div>
+            <Typography variant="overline" sx={{ letterSpacing: 2, color: 'text.secondary' }}>
+              GYMTRACKER AI
+            </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
                 Features
