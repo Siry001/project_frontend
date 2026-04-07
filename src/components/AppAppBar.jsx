@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Logo from '../assets/extension_icon.svg';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -56,24 +57,36 @@ export default function AppAppBar() {
               GYMTRACKER AI
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button variant="text" color="info" size="small">
-                Features
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Testimonials
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Highlights
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Pricing
-              </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
-                FAQ
-              </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
-                Blog
-              </Button>
+              <HashLink smooth to="#testimonials" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small">
+                  Testimonials
+                </Button>
+              </HashLink>
+              <HashLink smooth to="#highlights" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small">
+                  Highlights
+                </Button>
+              </HashLink>
+              <HashLink smooth to="#pricing" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small">
+                  Pricing
+                </Button>
+              </HashLink>
+              <HashLink smooth to="#faq" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+                  FAQ
+                </Button>
+              </HashLink>
+              <HashLink smooth to="#blog" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+                  Blog
+                </Button>
+              </HashLink>
+              <HashLink smooth to="#footer" style={{ textDecoration: 'none' }}>
+                <Button variant="text" color="info" size="small">
+                  Subscribe to newsletter
+                </Button>
+              </HashLink>
             </Box>
           </Box>
           <Box
