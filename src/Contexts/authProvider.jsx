@@ -42,14 +42,14 @@ export default function AuthProvider({ children }) {
         const result = await loginUser(userData)
         setTokenState(result.token)
         setToken(result.token)
-        navigate("/")
+        navigate("/dashboard")
     }
 
     async function register(userData) {
         const result = await registerUser(userData)
         setTokenState(result.token)
         setToken(result.token)
-        navigate("/")
+        navigate("/dashboard")
     }
 
     async function logout() {
