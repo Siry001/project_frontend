@@ -42,6 +42,7 @@ export default function AuthProvider({ children }) {
         const result = await loginUser(userData)
         setTokenState(result.token)
         setToken(result.token)
+        setUser(result.user)
         navigate("/dashboard")
     }
 
@@ -49,6 +50,7 @@ export default function AuthProvider({ children }) {
         const result = await registerUser(userData)
         setTokenState(result.token)
         setToken(result.token)
+        setUser(result.user)
         navigate("/dashboard")
     }
 

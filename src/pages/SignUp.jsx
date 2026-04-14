@@ -13,6 +13,8 @@ import AuthLayout from '../components/AuthLayout';
 import { GoogleIcon, FacebookIcon } from '../components/CustomIcons';
 import Logo from '../assets/extension_icon.svg';
 
+import { useAuth } from "../Contexts/customHooks";
+
 // Removed custom Card and SignUpContainer, using AuthLayout instead.
 
 export default function SignUp(props) {
@@ -22,6 +24,8 @@ export default function SignUp(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+
+  const { register } = useAuth();
 
   const validateInputs = () => {
     const email = document.getElementById('email');
@@ -60,18 +64,21 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (nameError || emailError || passwordError) {
-      event.preventDefault();
       return;
-    }
+    };
+
     const data = new FormData(event.currentTarget);
-    console.log({
+    
+    const userData = {
       name: data.get('name'),
-      lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    await register(userData)
   };
 
   return (
