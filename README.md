@@ -2,15 +2,33 @@
 
 - This project was developed as part of a System Design and Analysis course.
 
-- Read API Documentation: [API Documentation](./API_Documentation.md)
+- Read API Documentation: [API Documentation](Docs/API_Documentation.md)
+
+---
 
   ### Use Case Diagram
 
-  ![use-case-diagram](front-end_use-case.jpeg)
+  ![use-case-diagram](Docs/front-end_use-case.jpeg)
 
-  - See the full use case diagram: [PDF](./Front-end-use-Diagram.drawio.pdf)
+  - See the full use case diagram: [PDF](Docs/Front-end-use-Diagram.pdf)
 
-  
+---
+
+  ### Activity Diagram
+
+  ![activity-diagram](Docs/Activity-Diagram.jpg)
+
+  - See the full activity diagram: [PDF](Docs/Activity-Diagram.pdf)
+
+---
+
+  ### Class Diagram
+
+  ![class-diagram](Docs/front-end_Class-Diagram.jpg)
+
+  - See the full class diagram: [PDF](Docs/front-end_Class-Diagram.pdf)
+
+---
 
 ## Instructions
 
