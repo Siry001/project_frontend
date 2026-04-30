@@ -1,5 +1,5 @@
 import * as React from "react";
-import Alert from "@mui/material/Alert";
+
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
@@ -13,19 +13,9 @@ import CardContent from "@mui/material/CardContent";
 
 import Stack from "@mui/material/Stack";
 
-import PersonIcon from "@mui/icons-material/Person";
-
-import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
-import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
-import RestaurantMenuRoundedIcon from "@mui/icons-material/RestaurantMenuRounded";
 import { useTheme } from "@mui/material/styles";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  generateAiDietPlan,
-  generateAiWorkout,
-} from "../api/services/aiFeaturesServices";
-import DietSystemCard from "../components/dashboard/DietSystemCard";
-import WorkoutSystemCard from "../components/dashboard/WorkoutSystemCard";
+
 import AppTheme from "../shared-theme/AppTheme";
 
 import { useAuth } from "../Contexts/customHooks";
@@ -40,42 +30,6 @@ const initialWorkout = {
   sessionLength: "",
   notes: "",
 };
-const initialDietPlan = {
-  goal: "",
-  calories: "",
-  meals: "",
-  notes: "",
-};
-
-function hasRequiredDietData(values) {
-  return Boolean(
-    values.goal.trim() && values.calories.trim() && values.meals.trim(),
-  );
-}
-
-function formatManualDiet(values) {
-  // return formatManualPlan(
-  //   "Manual nutrition setup",
-  //   "These meal preferences are currently driving the nutrition plan preview.",
-  //   [
-  //     {
-  //       title: "Targets",
-  //       items: [
-  //         `Goal: ${values.goal || "Not set yet"}`,
-  //         `Calories: ${values.calories || "Not set"} kcal`,
-  //         `Meals per day: ${values.meals || "Not set"}`,
-  //       ],
-  //     },
-  //     {
-  //       title: "Preferences",
-  //       items: [
-  //         values.notes ||
-  //           "Add dietary preferences, restrictions, or meal style notes.",
-  //       ],
-  //     },
-  //   ],
-  // );
-}
 
 function toSentenceCase(text) {
   return text
@@ -111,76 +65,7 @@ function valueToItems(value) {
   return [];
 }
 
-function formatAiPlan(data, fallbackHeadline, fallbackDescription) {
-  if (typeof data === "string") {
-    return {
-      source: "ai",
-      headline: fallbackHeadline,
-      description: fallbackDescription,
-      sections: [{ title: "AI Plan", items: [data] }],
-    };
-  }
 
-  if (Array.isArray(data)) {
-    return {
-      source: "ai",
-      headline: fallbackHeadline,
-      description: fallbackDescription,
-      sections: [{ title: "AI Plan", items: valueToItems(data) }],
-    };
-  }
-
-  if (data && typeof data === "object") {
-    const headline =
-      data.title ||
-      data.name ||
-      data.summary ||
-      data.goal ||
-      data.planName ||
-      fallbackHeadline;
-    const description =
-      data.description ||
-      data.overview ||
-      data.message ||
-      data.intro ||
-      fallbackDescription;
-
-    const reserved = new Set([
-      "title",
-      "name",
-      "summary",
-      "goal",
-      "planName",
-      "description",
-      "overview",
-      "message",
-      "intro",
-    ]);
-    const sections = Object.entries(data)
-      .filter(([key]) => !reserved.has(key))
-      .map(([key, value]) => ({
-        title: toSentenceCase(key),
-        items: valueToItems(value),
-      }))
-      .filter((section) => section.items.length > 0);
-
-    return {
-      source: "ai",
-      headline,
-      description,
-      sections: sections.length
-        ? sections
-        : [{ title: "AI Plan", items: ["Plan generated successfully."] }],
-    };
-  }
-
-  return {
-    source: "ai",
-    headline: fallbackHeadline,
-    description: fallbackDescription,
-    sections: [{ title: "AI Plan", items: ["Plan generated successfully."] }],
-  };
-}
 
 export default function Dashboard(props) {
   const isOutlet = useOutlet();
@@ -188,62 +73,12 @@ export default function Dashboard(props) {
   const drawerWidth = 280;
   const collapsedWidth = 72;
   const [open, setOpen] = React.useState(true);
-  const [dietPlan, updateDietPlan] = React.useState(initialDietPlan);
-  const [dietSource, setDietSource] = React.useState("manual");
-  const [aiDietContent, setAiDietContent] = React.useState(null);
-  const [dietLoading, setDietLoading] = React.useState(false);
-  const [workoutError, setWorkoutError] = React.useState("");
-  const [dietError, setDietError] = React.useState("");
-  const [isDietPlanVisible, setIsDietPlanVisible] = React.useState(false);
+
   const theme = useTheme();
 
-  function setDietPlan(data) {
-    updateDietPlan((current) => ({ ...current, ...data }));
-    setDietSource("manual");
-    setDietError("");
-  }
+  const { user } = useAuth();
 
-  function showDietPlan() {
-    if (hasRequiredDietData(dietPlan)) {
-      setIsDietPlanVisible(true);
-    }
-  }
 
-  function getDietPlan() {
-    if (dietSource === "ai" && aiDietContent) {
-      return formatAiPlan(
-        aiDietContent,
-        "AI diet plan",
-        "Generated from your latest nutrition preferences.",
-      );
-    }
-
-    return formatManualDiet(dietPlan);
-  }
-
-  async function handleGenerateDietPlan() {
-    try {
-      setDietLoading(true);
-      setDietError("");
-      const response = await generateAiDietPlan(dietPlan);
-      setAiDietContent(response);
-      setDietSource("ai");
-      setIsDietPlanVisible(true);
-    } catch (error) {
-      setDietError(
-        error?.response?.data?.message ||
-          "Unable to generate diet plan right now.",
-      );
-    } finally {
-      setDietLoading(false);
-    }
-  }
-
-  const { user, logout } = useAuth();
-
-  const currentDietPlan = getDietPlan();
-
-  const canShowDietPlan = hasRequiredDietData(dietPlan);
   // const overviewCards = [
   //   {
   //     title: "Workout cadence",
@@ -468,35 +303,12 @@ export default function Dashboard(props) {
                 ))}
               </Box> */}
 
-                {(workoutError || dietError) && (
+                {/* {(workoutError || dietError) && (
                   <Alert severity="info" sx={{ borderRadius: 4 }}>
                     Existing manual content stays visible whenever AI generation
                     fails.
                   </Alert>
-                )}
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 3,
-                    alignItems: "stretch",
-                  }}
-                >
-                  <Box sx={{ flex: "1 1 520px", minWidth: 0 }}>
-                    <DietSystemCard
-                      values={dietPlan}
-                      displayPlan={currentDietPlan}
-                      onChange={setDietPlan}
-                      onShowPlan={showDietPlan}
-                      onGenerate={handleGenerateDietPlan}
-                      loading={dietLoading}
-                      error={dietError}
-                      isPlanVisible={isDietPlanVisible}
-                      canShowPlan={canShowDietPlan}
-                    />
-                  </Box>
-                </Box>
+                )} */}
               </Stack>
             </Container>
           )}

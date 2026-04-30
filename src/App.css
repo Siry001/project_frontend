@@ -182,3 +182,12 @@
     border-right-color: var(--border);
   }
 }
+
+.image-box {
+  transition: .7s ease-in-out;
+}
+
+.image-box:hover {
+  transform: scale(115%);
+  /* transition-duration: 1s; */
+}

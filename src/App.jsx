@@ -5,9 +5,11 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 
 import Workout from "./pages/Workout";
-// import Diet from "./pages/Diet";
+import Diet from "./pages/Diet";
 
 import ProtectedRoutes from "./components/ProtectedRoutes";
+
+import "./App.css"
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="workout" element={<Workout />} />
-            {/* <Route path="/diet" element={<Dashboard content={<Diet />} />} /> */}
+            <Route path="nutrition" element={<Diet />} />
             {/* <Route path="/settings" element={<Settings />} /> */}
           </Route>
         </Route>
